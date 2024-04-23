@@ -61,7 +61,15 @@ services:
     ports:
       - 3030:3030
 
-
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    networks: 
+      - broker-kafka
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongodb:/data/db
 
 networks: 
   broker-kafka:

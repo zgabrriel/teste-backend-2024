@@ -15,6 +15,7 @@ type Product struct {
 	Description string    `json:"description"  bson:"description,omitempty"`
 	CreatedAt   time.Time `json:"created_at"  bson:"created_at,omitempty"`
 	UpdatedAt   time.Time `json:"updated_at"  bson:"updated_at,omitempty"`
+	Amount      int       `json:"amount" bson:"amount,omitempty"`
 }
 
 func (p *Product) Validate() error {
@@ -29,5 +30,6 @@ func (p *Product) Validate() error {
 		validation.Field(&validate.Price, validation.Required, validation.Min(0.01), validation.Max(1000000.00)),
 		validation.Field(&validate.Brand, validation.Required),
 		validation.Field(&validate.Description, validation.Required),
+		validation.Field(&validate.Amount, validation.Required),
 	)
 }

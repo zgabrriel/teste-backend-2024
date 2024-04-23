@@ -34,18 +34,14 @@ func TestIndexHome(t *testing.T) {
 
 	// Convert the correct object response to a map
 	response := struct {
-		Data struct {
-			Api struct {
-				Status  int    `json:"status"`
-				Message string `json:"message"`
-			} `json:"api"`
-		} `json:"data"`
+		Status  int    `json:"status"`
+		Message string `json:"message"`
 	}{}
 
 	err := json.Unmarshal(w.Body.Bytes(), &response)
 
 	// Make some assertions on the correctness of the response.
 	assert.Nil(t, err)
-	assert.Equal(t, body["message"], response.Data.Api.Message)
+	assert.Equal(t, body["message"], response.Message)
 
 }

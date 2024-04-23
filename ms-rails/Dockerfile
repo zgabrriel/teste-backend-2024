@@ -8,6 +8,8 @@ RUN apk --update --upgrade add \
       build-base\
       tzdata
 
+RUN apk add --no-cache gcompat
+
 ENV INSTALL_PATH /ms-rails
 
 RUN mkdir -p $INSTALL_PATH

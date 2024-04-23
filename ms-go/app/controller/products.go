@@ -48,13 +48,13 @@ func ShowProducts(c *gin.Context) {
 
 func CreateProducts(c *gin.Context) {
 	var params models.Product
-
 	if err := c.BindJSON(&params); err != nil {
-		c.AbortWithStatus(http.StatusBadRequest)
+		c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
 		return
 	}
 
 	product, err := products.Create(params, true)
+	products.Upsert(*product)
 
 	if err != nil {
 		switch err.(type) {
@@ -73,7 +73,7 @@ func UpdateProducts(c *gin.Context) {
 	var params models.Product
 
 	if err := c.BindJSON(&params); err != nil {
-		c.AbortWithStatus(http.StatusBadRequest)
+		c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
 		return
 	}
 
@@ -82,7 +82,7 @@ func UpdateProducts(c *gin.Context) {
 	params.ID = id
 
 	product, err := products.Update(params, true)
-
+	products.Upsert(*product)
 	if err != nil {
 		switch err.(type) {
 		case *helpers.GenericError:
